@@ -20,7 +20,7 @@ URL:		http://www.padl.com/OSS/pam_ldap.html
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	openldap-devel
-Obsoletes:	%{modulename}
+Obsoletes:	pam-pam_ldap
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_libdir		/lib
@@ -66,6 +66,7 @@ rm -f missing
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	INSTALLUSER=`id -u` \
