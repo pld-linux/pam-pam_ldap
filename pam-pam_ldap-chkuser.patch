@@ -1,0 +1,185 @@
+diff -ur pam_ldap-107.orig/pam_ldap.c pam_ldap-107/pam_ldap.c
+--- pam_ldap-107.orig/pam_ldap.c	Sat Apr 14 04:08:12 2001
++++ pam_ldap-107/pam_ldap.c	Sat Apr 21 06:28:10 2001
+@@ -645,6 +645,15 @@
+ 	  else if (!strcasecmp (v, "always"))
+ 	    result->deref = LDAP_DEREF_ALWAYS;
+ 	}
++      else if (!strcasecmp (k, "userconnect_check"))
++       {
++	  if (!strcasecmp (v, "yes") || !strcasecmp (v, "true"))
++	    result->userconnect_check = 1;
++	}
++      else if (!strcasecmp (k, "userdn"))
++        {
++	    CHECKPOINTER (result->userdn = strdup(v));
++	}
+       else if (!strcasecmp (k, "pam_password"))
+ 	{
+ 	  if (!strcasecmp (v, "clear"))
+@@ -1696,6 +1705,61 @@
+ }
+ 
+ static int
++_get_user_info_fast (pam_ldap_session_t * session, const char *user)
++{
++  if (session->info != NULL)
++    {
++      _release_user_info (&session->info);
++    }
++
++  session->info =
++    (pam_ldap_user_info_t *) calloc (1, sizeof (pam_ldap_user_info_t));
++  if (session->info == NULL)
++    {
++      return PAM_BUF_ERR;
++    }
++
++  session->info->username = strdup (user);
++  if (session->info->username == NULL)
++    {
++      _release_user_info (&session->info);
++      return PAM_BUF_ERR;
++    }
++
++  session->info->userdn = _parse_user (session, user);
++  if (session->info->userdn == NULL)
++    {
++      _release_user_info (&session->info);
++      return PAM_SYSTEM_ERR;
++    }
++
++  session->info->bound_as_user = 0;
++
++  /* get UID */
++#ifdef UID_NOBODY
++  session->info->uid = UID_NOBODY;
++#else
++  session->info->uid = (uid_t) - 2;
++#endif /* UID_NOBODY */
++  /*
++   * get mapped user; some PAM host applications let PAM_USER be reset
++   * by the user (such as some of those provided with FreeBSD).
++   */
++  session->info->tmpluser = NULL;
++
++  /* Assume shadow controls.  Allocate shadow structure and link to session. */
++  session->info->shadow.lstchg = 0;
++  session->info->shadow.min = 0;
++  session->info->shadow.max = 0;
++  session->info->shadow.warn = 0;
++  session->info->shadow.inact = 0;
++  session->info->shadow.expire = 0;
++  session->info->shadow.flag = 0;
++
++  return PAM_SUCCESS;
++}
++
++static int
+ _pam_ldap_get_session (pam_handle_t * pamh, const char *username,
+ 		       const char *configFile, pam_ldap_session_t ** psession)
+ {
+@@ -1744,7 +1808,7 @@
+     {
+       _release_config (&session->conf);
+ #endif /* YPLDAPD */
+-      rc = _read_config (configFile, &session->conf);
++       rc = _read_config (configFile, &session->conf);
+       if (rc != PAM_SUCCESS)
+ 	{
+ 	  _release_config (&session->conf);
+@@ -1849,9 +1913,13 @@
+ 
+   if (session->info == NULL)
+     {
+-      rc = _get_user_info (session, user);
+-      if (rc != PAM_SUCCESS)
+-	return rc;
++        if (session->conf->userconnect_check)
++	    rc = _get_user_info_fast (session, user);
++	else
++	    rc = _get_user_info (session, user);
++	    
++        if (rc != PAM_SUCCESS)
++	    return rc;
+     }
+ 
+   rc = _reopen (session);
+@@ -2187,6 +2255,35 @@
+ 		      &resp, aconv->appdata_ptr);
+ }
+ 
++/* This function replaces A_USER macro with username given	*/
++/* by PAM apllication interface					*/
++
++static char* 
++_parse_user (pam_ldap_session_t *ps, const char *username)
++{
++  char *x = NULL;		/* begin localizer */
++  char *n = NULL;		/* Power of Jesus! */
++  char *userdn = ps->conf->userdn;
++  
++  n = (char *) calloc (strlen (userdn) + strlen (username)
++		       - (sizeof (A_USER) - 1) + (1 * sizeof (char)),
++                       sizeof (char));
++  
++  if (n == NULL) return NULL;
++  x = strstr (userdn, A_USER);
++  if (x == NULL) 
++    {
++      n = strdup (userdn);
++      return n;
++    }
++  strncpy (n, userdn, x-userdn);
++  x += sizeof (A_USER); x--;  /* first char of string after A_USER */
++  strcat (n, username);         /* before A_USER */
++  strcat (n, x);       	      	/* after A_USER */
++  
++  return n;  
++}
++
+ PAM_EXTERN int
+ pam_sm_authenticate (pam_handle_t * pamh,
+ 		     int flags, int argc, const char **argv)
+diff -ur pam_ldap-107.orig/pam_ldap.h pam_ldap-107/pam_ldap.h
+--- pam_ldap-107.orig/pam_ldap.h	Sat Apr 14 04:03:44 2001
++++ pam_ldap-107/pam_ldap.h	Sat Apr 21 05:21:39 2001
+@@ -44,6 +44,11 @@
+     int scope;
+     /* deref policy */
+     int deref;
++    /* use real username and password while connecting to ldap? */
++    int userconnect_check;
++#define	A_USER		"A_USER"
++#define	A_PASS		"A_PASS"
++    char *userdn;
+     /* bind dn/pw for "anonymous" authentication */
+     char *binddn;
+     char *bindpw;
+diff -ur pam_ldap-107.orig/ldap.conf pam_ldap-107/ldap.conf
+--- pam_ldap-107.orig/ldap.conf	Sat Apr 21 17:07:34 2001
++++ pam_ldap-107/ldap.conf	Sat Apr 21 17:12:15 2001
+@@ -33,6 +33,23 @@
+ # Optional: default is no credential.
+ #bindpw secret
+ 
++# BEGIN PLD GNU/Linux specific options
++
++# Enabling userconnect check feature allows you
++# to make a connection to LDAP server using
++# user DN and password given by application,
++# but without fetching any data from LDAP server!
++# If connect succeeds then we're authenticated.
++
++# Enable support.
++#userconnect_check yes
++
++# The distinguished name to bind to the server with
++# A_USER macro will be expanded into username.
++#userdn cn=A_USER,dc=padl,dc=com
++
++# END PLD GNU/Linux specific options
++
+ # The distinguished name to bind to the server with
+ # if the effective user ID is root. Password is
+ # stored in /etc/ldap.secret (mode 600)

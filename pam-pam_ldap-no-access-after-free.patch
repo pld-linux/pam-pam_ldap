@@ -1,0 +1,14 @@
+--- pam_ldap-164/pam_ldap.c.orig	Thu Aug 14 16:28:29 2003
++++ pam_ldap-164/pam_ldap.c	Thu Aug 14 16:29:32 2003
+@@ -540,9 +540,10 @@
+     }
+ 
+   _release_config (&session->conf);
++  session->conf = NULL;
+   _release_user_info (&session->info);
++  session->info = NULL;
+ 
+-  free (data);
+ #if LDAP_SET_REBIND_PROC_ARGS < 3
+   global_session = 0;
+ #endif

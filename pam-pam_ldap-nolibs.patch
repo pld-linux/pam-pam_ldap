@@ -1,0 +1,20 @@
+--- pam_ldap-161/configure.in.orig	2003-02-21 06:59:36.000000000 +0100
++++ pam_ldap-161/configure.in	2003-05-17 22:45:34.000000000 +0200
+@@ -72,16 +72,8 @@
+ AC_CHECK_LIB(dl, main)
+ AC_CHECK_LIB(pam, main)
+ dnl AC_CHECK_LIB(pthread, main)
+-AC_CHECK_LIB(resolv, main)
+ AC_CHECK_LIB(crypt, main)
+-AC_CHECK_LIB(nsl, main)
+-
+-AC_CHECK_FUNCS(gethostbyname)
+-if test "$ac_cv_func_gethostbyname" = "no"; then
+-  unset ac_cv_func_gethostbyname
+-  AC_CHECK_LIB(nsl, main)
+-  AC_CHECK_FUNCS(gethostbyname)
+-fi
++AC_SEARCH_LIBS(gethostbyname,[resolv nsl])
+ 
+ 
+ dnl check which ldap library we have
