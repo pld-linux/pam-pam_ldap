@@ -163,7 +163,7 @@ diff -ur pam_ldap-107.orig/ldap.conf pam_ldap-107/ldap.conf
  # Optional: default is no credential.
  #bindpw secret
  
-+# BEGIN PLD GNU/Linux specific options
++# BEGIN PLD Linux specific options
 +
 +# Enabling userconnect check feature allows you
 +# to make a connection to LDAP server using
@@ -178,7 +178,7 @@ diff -ur pam_ldap-107.orig/ldap.conf pam_ldap-107/ldap.conf
 +# A_USER macro will be expanded into username.
 +#userdn cn=A_USER,dc=padl,dc=com
 +
-+# END PLD GNU/Linux specific options
++# END PLD Linux specific options
 +
  # The distinguished name to bind to the server with
  # if the effective user ID is root. Password is
