@@ -5,7 +5,7 @@ Summary(pl):	Modu³ PAM do uwierzytelniania z u¿yciem LDAP
 Summary(pt_BR):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-%{modulename}
 Version:	169
-Release:	3
+Release:	4
 Epoch:		1
 Vendor:		Luke Howard <lukeh@padl.com>
 License:	LGPL
@@ -23,7 +23,7 @@ BuildRequires:	openldap-devel
 Obsoletes:	pam_ldap
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_libdir		/lib
+%define		_libdir		/%{_lib}
 
 %description
 This is pam_ldap, a pluggable authentication module that can be used
@@ -57,7 +57,6 @@ autorização de acesso, etc.
 %patch3 -p1
 
 %build
-rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__automake}
