@@ -4,14 +4,14 @@ Summary(es):	Módulo de autenticación que puede conectarse (PAM) para LDAP
 Summary(pl):	Modu³ PAM do uwierzytelniania z u¿yciem LDAP
 Summary(pt_BR):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-%{modulename}
-Version:	169
-Release:	4
+Version:	170
+Release:	1
 Epoch:		1
 Vendor:		Luke Howard <lukeh@padl.com>
 License:	LGPL
 Group:		Base
 Source0:	http://www.padl.com/download/%{modulename}-%{version}.tar.gz
-# Source0-md5:	62abfe9c5d62e7d112c12d0e5863129f
+# Source0-md5:	89f238c7b28235a555448781afff2417
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-chkuser.patch
 Patch2:		%{name}-nolibs.patch
