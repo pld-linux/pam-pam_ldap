@@ -5,6 +5,7 @@ Summary(pt_BR):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-pam_ldap
 Version:	165
 Release:	1
+Epoch:		1
 Vendor:		Luke Howard <lukeh@padl.com>
 License:	LGPL
 Group:		Base
