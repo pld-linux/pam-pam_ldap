@@ -47,7 +47,7 @@ SSL, ypldapd, política de senhas do Netscape Directory Server,
 autorização de acesso, etc.
 
 %prep
-%setup -q
+%setup -q -n pam_ldap-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
