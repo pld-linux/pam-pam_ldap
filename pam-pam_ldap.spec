@@ -1,3 +1,5 @@
+# TODO
+# - SECURITY http://security.gentoo.org/glsa/glsa-200507-13.xml
 %define 	modulename pam_ldap
 Summary:	LDAP Pluggable Authentication Module
 Summary(es):	Módulo de autenticación que puede conectarse (PAM) para LDAP
