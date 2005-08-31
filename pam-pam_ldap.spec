@@ -1,4 +1,6 @@
 #
+# ToDo:
+# - SECURITY: http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CAN-2005-2641
 %define 	modulename pam_ldap
 Summary:	LDAP Pluggable Authentication Module
 Summary(es):	Módulo de autenticación que puede conectarse (PAM) para LDAP
