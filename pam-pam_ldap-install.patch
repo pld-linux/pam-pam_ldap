@@ -1,5 +1,5 @@
---- pam_ldap-178/Makefile.am.orig	2005-03-24 01:00:04.000000000 +0100
-+++ pam_ldap-178/Makefile.am	2005-04-04 23:09:41.968827248 +0200
+--- pam_ldap-180/Makefile.am.orig	2005-08-18 00:35:13.000000000 +0200
++++ pam_ldap-180/Makefile.am	2005-09-02 21:09:45.542591768 +0200
 @@ -23,12 +23,12 @@
  	@$(NORMAL_INSTALL)
  	$(mkinstalldirs) $(DESTDIR)$(libdir)/security
@@ -16,16 +16,12 @@
  	(cd $(DESTDIR)$(libdir)/security; rm -f pam_ldap.so; ln -s pam_ldap.so.1 pam_ldap.so)
  endif
  endif
-@@ -37,9 +37,10 @@
+@@ -37,7 +37,7 @@
  	@$(NORMAL_INSTALL)
  	@if test ! -f $(DESTDIR)$(sysconfdir)/ldap.conf; then \
  		$(mkinstalldirs) $(DESTDIR)$(sysconfdir); \
 -		$(INSTALL_DATA) -o root -g root $(srcdir)/ldap.conf $(DESTDIR)$(sysconfdir)/ldap.conf; \
 +		$(INSTALL_DATA) $(srcdir)/ldap.conf $(DESTDIR)$(sysconfdir)/ldap.conf; \
  	fi
--	$(INSTALL_DATA) -o root -g root $(srcdir)/pam_ldap.5 $(DESTDIR)$(mandir)/man5/pam_ldap.5
-+	$(mkinstalldirs) $(DESTDIR)$(mandir)/man5; \
-+	$(INSTALL_DATA) $(srcdir)/pam_ldap.5 $(DESTDIR)$(mandir)/man5/pam_ldap.5
  
  uninstall-local:
- 	@$(NORMAL_UNINSTALL)
