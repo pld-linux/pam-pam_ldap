@@ -1,25 +1,21 @@
-#
-# ToDo:
-# - SECURITY: http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CAN-2005-2641
 %define 	modulename pam_ldap
 Summary:	LDAP Pluggable Authentication Module
 Summary(es):	Módulo de autenticación que puede conectarse (PAM) para LDAP
 Summary(pl):	Modu³ PAM do uwierzytelniania z u¿yciem LDAP
 Summary(pt_BR):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-%{modulename}
-Version:	178
-Release:	2
+Version:	180
+Release:	1
 Epoch:		1
 Vendor:		Luke Howard <lukeh@padl.com>
 License:	LGPL
 Group:		Base
 Source0:	http://www.padl.com/download/%{modulename}-%{version}.tar.gz
-# Source0-md5:	222186c498d24a7035e8a7494fc0797d
+# Source0-md5:	627f053fdffb8267ba73261394e0ecde
 Patch0:		%{name}-install.patch
 Patch1:		%{name}-chkuser.patch
 Patch2:		%{name}-nolibs.patch
 Patch3:		%{name}-no-access-after-free.patch
-Patch4:		%{name}-CAN-2005-2069.patch
 URL:		http://www.padl.com/OSS/pam_ldap.html
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -60,7 +56,6 @@ autorização de acesso, etc.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 %{__aclocal}
