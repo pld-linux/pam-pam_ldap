@@ -53,15 +53,16 @@ autorização de acesso, etc.
 
 %package -n openldap-schema-pam_ldap
 Summary:	pam_ldap LDAP schema
-Summary:	Schemat LDAP dla pam_ldap
-Group:		?
+Summary(pl):	Schemat LDAP dla pam_ldap
+Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
 
 %description -n openldap-schema-pam_ldap
 This package contains LDAP schema used by pam_ldap.
 
-
+%description -n openldap-schema-pam_ldap -l pl
+Ten pakiet zawiera schemat LDAP u¿ywany przez pam_ldap.
 
 %prep
 %setup -q -n %{modulename}-%{version}
