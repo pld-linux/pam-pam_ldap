@@ -5,7 +5,7 @@ Summary(pl):	Modu³ PAM do uwierzytelniania z u¿yciem LDAP
 Summary(pt_BR):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-%{modulename}
 Version:	180
-Release:	3
+Release:	4
 Epoch:		1
 Vendor:		Luke Howard <lukeh@padl.com>
 License:	LGPL
@@ -133,7 +133,8 @@ if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/ldap ]; then
 		/etc/rc.d/init.d/ldap restart >&2 || :
 	fi
-f
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc README ChangeLog ldap.conf pam.d
