@@ -17,10 +17,13 @@ diff -ur pam_ldap-107.orig/pam_ldap.c pam_ldap-107/pam_ldap.c
        else if (!strcasecmp (k, "pam_password"))
  	{
  	  if (!strcasecmp (v, "clear"))
-@@ -1696,6 +1705,61 @@
+@@ -1696,6 +1705,63 @@
+   return PAM_SUCCESS;
  }
  
- static int
++static char* _parse_user( pam_ldap_session_t* ps, const char* username );
++
++static int
 +_get_user_info_fast (pam_ldap_session_t * session, const char *user)
 +{
 +  if (session->info != NULL)
@@ -75,10 +78,9 @@ diff -ur pam_ldap-107.orig/pam_ldap.c pam_ldap-107/pam_ldap.c
 +  return PAM_SUCCESS;
 +}
 +
-+static int
+ static int
  _pam_ldap_get_session (pam_handle_t * pamh, const char *username,
  		       const char *configFile, pam_ldap_session_t ** psession)
- {
 @@ -1744,7 +1808,7 @@
      {
        _release_config (&session->conf);
