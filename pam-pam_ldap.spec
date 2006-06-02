@@ -7,7 +7,6 @@ Name:		pam-%{modulename}
 Version:	182
 Release:	1
 Epoch:		1
-Vendor:		Luke Howard <lukeh@padl.com>
 License:	LGPL
 Group:		Base
 Source0:	http://www.padl.com/download/%{modulename}-%{version}.tar.gz
@@ -21,6 +20,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	openldap-devel >= 2.3.0
 BuildRequires:	pam-devel
+BuildRequires:	rpmbuild(macros) >= 1.304
 Obsoletes:	pam_ldap
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -94,45 +94,13 @@ install ns-pwd-policy.schema $RPM_BUILD_ROOT%{schemadir}/
 rm -rf $RPM_BUILD_ROOT
 
 %post -n openldap-schema-pam_ldap
-if ! grep -q %{schemadir}/pam_ldap-ns.schema /etc/openldap/slapd.conf; then
-	sed -i -e '
-		/^include.*local.schema/{
-			i\
-include		%{schemadir}/pam_ldap-ns.schema
-		}
-	' /etc/openldap/slapd.conf
-fi
-if ! grep -q %{schemadir}/ns-pwd-policy.schema /etc/openldap/slapd.conf; then
-	sed -i -e '
-		/^include.*local.schema/{
-			i\
-include		%{schemadir}/ns-pwd-policy.schema
-		}
-	' /etc/openldap/slapd.conf
-fi
-
-
-if [ -f /var/lock/subsys/ldap ]; then
-	/etc/rc.d/init.d/ldap restart >&2
-fi
+%openldap_schema_register %{schemadir}/{pam_ldap-ns,ns-pwd-policy}.schema
+%service -q ldap restart
 
 %postun -n openldap-schema-pam_ldap
 if [ "$1" = "0" ]; then
-	if grep -q %{schemadir}/pam_ldap-ns.schema /etc/openldap/slapd.conf; then
-		sed -i -e '
-		/^include.*\/usr\/share\/openldap\/schema\/pam_ldap-ns.schema/d
-		' /etc/openldap/slapd.conf
-	fi
-
-	if grep -q %{schemadir}/ns-pwd-policy.schema /etc/openldap/slapd.conf; then
-		sed -i -e '
-		/^include.*\/usr\/share\/openldap\/schema\/ns-pwd-policy.schema/d
-		' /etc/openldap/slapd.conf
-	fi
-
-	if [ -f /var/lock/subsys/ldap ]; then
-		/etc/rc.d/init.d/ldap restart >&2 || :
-	fi
+	%openldap_schema_unregister %{schemadir}/{pam_ldap-ns,ns-pwd-policy}.schema
+	%service -q ldap restart
 fi
 
 %files
