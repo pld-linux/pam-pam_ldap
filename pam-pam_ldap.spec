@@ -1,8 +1,8 @@
 %define 	modulename pam_ldap
 Summary:	LDAP Pluggable Authentication Module
-Summary(es):	MÛdulo de autenticaciÛn que puede conectarse (PAM) para LDAP
-Summary(pl):	Modu≥ PAM do uwierzytelniania z uøyciem LDAP
-Summary(pt_BR):	MÛdulo de autenticaÁ„o plug·vel (PAM) para o LDAP
+Summary(es.UTF-8):   M√≥dulo de autenticaci√≥n que puede conectarse (PAM) para LDAP
+Summary(pl.UTF-8):   Modu≈Ç PAM do uwierzytelniania z u≈ºyciem LDAP
+Summary(pt_BR.UTF-8):   M√≥dulo de autentica√ß√£o plug√°vel (PAM) para o LDAP
 Name:		pam-%{modulename}
 Version:	183
 Release:	1
@@ -33,27 +33,27 @@ with linux-PAM. This module supports password changes, V2 clients,
 Netscapes SSL, ypldapd, Netscape Directory Server password policies,
 access authorization, crypted hashes, etc.
 
-%description -l es
-pam_ldap es un mÛdulo de autenticaciÛn que puede conectarse y usarse
-con Linux-PAM. Este mÛdulo acepta cambio de contraseÒas, clientes V2,
-Netscape SSL, ypldapd, polÌtica de contraseÒas de Netscape Directory
-Server, autorizaciÛn de acceso, etc.
+%description -l es.UTF-8
+pam_ldap es un m√≥dulo de autenticaci√≥n que puede conectarse y usarse
+con Linux-PAM. Este m√≥dulo acepta cambio de contrase√±as, clientes V2,
+Netscape SSL, ypldapd, pol√≠tica de contrase√±as de Netscape Directory
+Server, autorizaci√≥n de acceso, etc.
 
-%description -l pl
-To jest pam_ldap, wymienny modu≥ uwierzytelniania, ktÛry moøe byÊ
-uøyty z linux-PAM. Modu≥ ten wspiera zmienianie hase≥, klientÛw V2,
-SSL firmy Netscape, ypldapd, polisy hase≥ Netscape Directory Server,
-autoryzacjÍ dostÍpu, zakodowane skrÛty, itd.
+%description -l pl.UTF-8
+To jest pam_ldap, wymienny modu≈Ç uwierzytelniania, kt√≥ry mo≈ºe byƒá
+u≈ºyty z linux-PAM. Modu≈Ç ten wspiera zmienianie hase≈Ç, klient√≥w V2,
+SSL firmy Netscape, ypldapd, polisy hase≈Ç Netscape Directory Server,
+autoryzacjƒô dostƒôpu, zakodowane skr√≥ty, itd.
 
-%description -l pt_BR
-pam_ldap È um mÛdulo de autenticaÁ„o plug·vel que pode ser usado com o
-Linux-PAM. Esse mÛdulo aceita mudanÁa de senhas, clientes V2, Netscape
-SSL, ypldapd, polÌtica de senhas do Netscape Directory Server,
-autorizaÁ„o de acesso, etc.
+%description -l pt_BR.UTF-8
+pam_ldap √© um m√≥dulo de autentica√ß√£o plug√°vel que pode ser usado com o
+Linux-PAM. Esse m√≥dulo aceita mudan√ßa de senhas, clientes V2, Netscape
+SSL, ypldapd, pol√≠tica de senhas do Netscape Directory Server,
+autoriza√ß√£o de acesso, etc.
 
 %package -n openldap-schema-pam_ldap
 Summary:	pam_ldap LDAP schema
-Summary(pl):	Schemat LDAP dla pam_ldap
+Summary(pl.UTF-8):   Schemat LDAP dla pam_ldap
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
@@ -61,8 +61,8 @@ Requires:	openldap-servers
 %description -n openldap-schema-pam_ldap
 This package contains LDAP schema used by pam_ldap.
 
-%description -n openldap-schema-pam_ldap -l pl
-Ten pakiet zawiera schemat LDAP uøywany przez pam_ldap.
+%description -n openldap-schema-pam_ldap -l pl.UTF-8
+Ten pakiet zawiera schemat LDAP u≈ºywany przez pam_ldap.
 
 %prep
 %setup -q -n %{modulename}-%{version}
