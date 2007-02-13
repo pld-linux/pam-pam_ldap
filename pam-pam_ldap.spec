@@ -1,8 +1,8 @@
 %define 	modulename pam_ldap
 Summary:	LDAP Pluggable Authentication Module
-Summary(es.UTF-8):   Módulo de autenticación que puede conectarse (PAM) para LDAP
-Summary(pl.UTF-8):   Moduł PAM do uwierzytelniania z użyciem LDAP
-Summary(pt_BR.UTF-8):   Módulo de autenticação plugável (PAM) para o LDAP
+Summary(es.UTF-8):	Módulo de autenticación que puede conectarse (PAM) para LDAP
+Summary(pl.UTF-8):	Moduł PAM do uwierzytelniania z użyciem LDAP
+Summary(pt_BR.UTF-8):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-%{modulename}
 Version:	183
 Release:	1
@@ -53,7 +53,7 @@ autorização de acesso, etc.
 
 %package -n openldap-schema-pam_ldap
 Summary:	pam_ldap LDAP schema
-Summary(pl.UTF-8):   Schemat LDAP dla pam_ldap
+Summary(pl.UTF-8):	Schemat LDAP dla pam_ldap
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
