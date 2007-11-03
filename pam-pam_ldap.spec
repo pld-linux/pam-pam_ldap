@@ -18,7 +18,7 @@ Patch3:		%{name}-no-access-after-free.patch
 URL:		http://www.padl.com/OSS/pam_ldap.html
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	openldap-devel >= 2.3.0
+BuildRequires:	openldap-devel >= 2.4.6
 BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.304
 Obsoletes:	pam_ldap
