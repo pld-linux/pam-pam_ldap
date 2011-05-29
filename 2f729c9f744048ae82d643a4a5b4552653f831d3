@@ -1,0 +1,5 @@
+- added support for simple and fast auth method using user's DN and password
+- additional options in /etc/ldap.conf [example]:
+   userconnect_check yes                    (to enable support)
+   userdn cn=A_USER,ou=unit,o=org           (A_USER macro expanded to username)
+- special thx to Michal Strzelczyk - for code, pepsi and fajki R1 :)
