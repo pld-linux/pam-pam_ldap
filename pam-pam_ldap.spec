@@ -57,6 +57,9 @@ Summary(pl.UTF-8):	Schemat LDAP dla pam_ldap
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description -n openldap-schema-pam_ldap
 This package contains LDAP schema used by pam_ldap.
@@ -82,14 +85,13 @@ Ten pakiet zawiera schemat LDAP używany przez pam_ldap.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{schemadir}
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	INSTALLUSER=`id -u` \
 	INSTALLGROUP=`id -g`
 
-install ldapns.schema $RPM_BUILD_ROOT%{schemadir}/pam_ldap-ns.schema
-install ns-pwd-policy.schema $RPM_BUILD_ROOT%{schemadir}/
+cp -p ldapns.schema $RPM_BUILD_ROOT%{schemadir}/pam_ldap-ns.schema
+cp -p ns-pwd-policy.schema $RPM_BUILD_ROOT%{schemadir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
