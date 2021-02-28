@@ -57,9 +57,7 @@ Summary(pl.UTF-8):	Schemat LDAP dla pam_ldap
 Group:		Networking/Daemons
 Requires(post,postun):	sed >= 4.0
 Requires:	openldap-servers
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n openldap-schema-pam_ldap
 This package contains LDAP schema used by pam_ldap.
