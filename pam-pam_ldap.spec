@@ -5,7 +5,7 @@ Summary(pl.UTF-8):	Moduł PAM do uwierzytelniania z użyciem LDAP
 Summary(pt_BR.UTF-8):	Módulo de autenticação plugável (PAM) para o LDAP
 Name:		pam-%{modulename}
 Version:	186
-Release:	3
+Release:	4
 Epoch:		1
 License:	LGPL
 Group:		Base
