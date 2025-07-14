@@ -67,9 +67,9 @@ Ten pakiet zawiera schemat LDAP używany przez pam_ldap.
 
 %prep
 %setup -q -n %{modulename}-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 # obsolete?
 #patch3 -p1
 
